@@ -45,7 +45,7 @@ A **Student Management System** built with **PHP** and **MySQL**, supporting ful
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/student-management-system.git
+   git clone https://github.com/rajatt04/student-management-system.git
    ```
 
 2. **Import the Database**
@@ -64,7 +64,7 @@ A **Student Management System** built with **PHP** and **MySQL**, supporting ful
    ```
 
 4. **Run the Application**
-   - Access `index.php` via your local server (e.g., XAMPP, WAMP)
+   - Access `main.php` via your local server (e.g., XAMPP, WAMP)
 
 ## 📌 Future Improvements
 
