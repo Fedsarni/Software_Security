@@ -1,7 +1,7 @@
 <?php
 
 $DATABASE_NAME='sms';
-$HOST='localhost';
+$HOST='sms-db';
 $STUDENT_ADD='student_add';
 $ADMIN='admin';
 $FACULTY='faculty';
