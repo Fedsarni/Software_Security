@@ -1,12 +1,11 @@
 <?php
-
-$DATABASE_NAME='sms';
+$DATABASE_NAME='sms_db';
 $HOST='sms-db';
 $STUDENT_ADD='student_add';
 $ADMIN='admin';
 $FACULTY='faculty';
-$USER='root';
-$PASSWORD='';
+$USER='sms_user';
+$PASSWORD='sms_password';
 
 $FC_NOTICE_STUDENT='fc_notice_student';
 $FC_STUDENT_NOTICE_DATE='fc_student_notice_date';

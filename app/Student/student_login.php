@@ -190,9 +190,35 @@
             $EMAIL=$_POST[$STUDENT_EMAIL];
             $PASSWORD=$_POST[$STUDENT_PASSWORD];
             
-            $selectQuery="SELECT * FROM $STUDENT_ADD WHERE $STUDENT_EMAIL='$EMAIL' AND $STUDENT_PASSWORD='$PASSWORD' ";
-            $dbQuery=mysqli_query($con,$selectQuery);
-            $data=mysqli_num_rows($dbQuery);
+            // ============================================
+            // CODICE ORIGINALE — VULNERABILE A SQL INJECTION
+            // Il valore di $EMAIL e $PASSWORD veniva concatenato
+            // direttamente nella stringa SQL, senza sanificazione.
+            // Payload come ' OR '1'='1 permettevano il bypass
+            // dell'autenticazione.
+            // ============================================
+            // $selectQuery="SELECT * FROM $STUDENT_ADD WHERE $STUDENT_EMAIL='$EMAIL' AND $STUDENT_PASSWORD='$PASSWORD' ";
+            // $dbQuery=mysqli_query($con,$selectQuery);
+            // $data=mysqli_num_rows($dbQuery);
+
+            // ============================================
+            // FIX — QUERY PARAMETRIZZATA (PREPARED STATEMENT)
+            // I valori $EMAIL e $PASSWORD vengono passati come
+            // parametri separati dal database (bind_param),
+            // quindi sono sempre trattati come dato letterale
+            // e mai come codice SQL eseguibile.
+            // ============================================
+            $selectQuery = "SELECT * FROM $STUDENT_ADD WHERE $STUDENT_EMAIL = ? AND $STUDENT_PASSWORD = ?";
+            $stmt = mysqli_prepare($con, $selectQuery);
+
+            if (!$stmt) {
+                die("Errore nella preparazione della query: " . mysqli_error($con) . " | Query: " . $selectQuery);
+            }
+
+            mysqli_stmt_bind_param($stmt, "ss", $EMAIL, $PASSWORD);
+            mysqli_stmt_execute($stmt);
+            $dbQuery = mysqli_stmt_get_result($stmt);
+            $data = mysqli_num_rows($dbQuery);
 
             if($data){
                 $_SESSION['email'] = $EMAIL;
