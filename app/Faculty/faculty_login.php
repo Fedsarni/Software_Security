@@ -186,7 +186,7 @@
                 ?>
                 <script type="text/javascript">
                     alert("Sucessfully Login")
-                    window.open("http://localhost/sms-main/Faculty/Faculty_panel.php","_self")
+                    window.open("http://localhost:8080/Faculty/Faculty_panel.php","_self")
                 </script>
             <?php
             }else{
@@ -201,7 +201,7 @@
         if(isset($_POST['go_to_home'])){
             ?>
                 <script type="text/javascript">
-                    window.open("http://localhost/sms-main/main.php","_self")
+                    window.open("http://localhost:8080/main.php","_self")
                 </script>
             <?php
         }

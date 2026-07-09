@@ -85,7 +85,7 @@
         if(isset($_POST['btnSignIn'])){
             ?>
                 <script>
-                    window.open("http://localhost/sms-main/Student/student_login.php","_self")
+                    window.open("http://localhost:8080/Student/student_login.php","_self")
                     </script>
             <?php
         }

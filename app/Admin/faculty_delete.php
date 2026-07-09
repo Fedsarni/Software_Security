@@ -7,7 +7,7 @@ if($deleteQuery){
     ?>
     <script type="text/javascript">
         alert("Faculty Removed !");
-        window.open("http://localhost/sms-main/Admin/admin_panel.php","_self")
+        window.open("http://localhost:8080/Admin/admin_panel.php","_self")
         </script>
     <?php
 }else{

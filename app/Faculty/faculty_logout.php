@@ -4,7 +4,7 @@ if(isset($_SESSION['isFacultyLogin']) == 1){
     ?>
         <script type="text/javascript">
              alert("Logout successfully")
-            window.open("http://localhost/sms-main/faculty/faculty_login.php","_self")
+            window.open("http://localhost:8080/faculty/faculty_login.php","_self")
         </script>
     <?php
 }else{
@@ -12,7 +12,7 @@ if(isset($_SESSION['isFacultyLogin']) == 1){
     ?>
     <script type="text/javascript">
         alert('Logout successfully')
-        window.open("http://localhost/sms-main/faculty/faculty_login.php","_self")
+        window.open("http://localhost:8080/faculty/faculty_login.php","_self")
     </script>
 <?php
 }

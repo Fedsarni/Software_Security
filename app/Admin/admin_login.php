@@ -210,7 +210,7 @@
                 ?>
                     <script type="text/javascript">    
                         alert('Successfully Login');
-                        window.open("http://localhost/sms-main/Admin/admin_panel.php","_self");
+                        window.open("http://localhost:8080/Admin/admin_panel.php","_self");
                     </script>
 
                 <?php
@@ -239,7 +239,7 @@
         if(isset($_POST['newAccount'])){
             ?>
                 <script type="text/javascript">
-                    window.open("http://localhost/sms-main/Admin/admin_signup.php","_self")
+                    window.open("http://localhost:8080/Admin/admin_signup.php","_self")
                 </script>
             <?php
         }
@@ -247,7 +247,7 @@
         if(isset($_POST['go_to_home'])){
             ?>
                 <script type="text/javascript">
-                    window.open("http://localhost/sms-main/main.php","_self")
+                    window.open("http://localhost:8080/main.php","_self")
                 </script>
             <?php
         }

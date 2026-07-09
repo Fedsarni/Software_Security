@@ -230,7 +230,7 @@
                     ?>
                         <script>
                             alert("This Student Added Already !");
-                            window.open("http://localhost/sms-main/Admin/student_panel.php","_self");
+                            window.open("http://localhost:8080/Admin/student_panel.php","_self");
                         </script>
                     <?php
                 } else {
@@ -240,14 +240,14 @@
                         ?>
                             <script>
                                 alert("Student Added Successfully !");
-                                window.open("http://localhost/sms-main/Admin/student_panel.php","_self");
+                                window.open("http://localhost:8080/Admin/student_panel.php","_self");
                             </script>
                         <?php
                     }else{
                         ?>
                             <script>
                                 alert("Something Went Wrong !");
-                                window.open("http://localhost/sms-main/Admin/student_panel.php","_self");
+                                window.open("http://localhost:8080/Admin/student_panel.php","_self");
                             </script>
                         <?php
                     } 

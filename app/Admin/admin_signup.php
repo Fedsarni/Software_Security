@@ -234,7 +234,7 @@
                         ?>
                         <script type="text/javascript">
                             alert("Admin account already exist")
-                            window.open("http://localhost/sms-main/Admin/admin_login.php","_self")
+                            window.open("http://localhost:8080/Admin/admin_login.php","_self")
                         </script>
                     <?php
                     }else{
@@ -244,7 +244,7 @@
                         ?>
                             <script type="text/javascript">
                                 alert("Successfully Register !")
-                                window.open("http://localhost/sms-main/Admin/admin_login.php","_self")
+                                window.open("http://localhost:8080/Admin/admin_login.php","_self")
                             </script>
                         <?php
                     }
@@ -254,7 +254,7 @@
             if(isset($_POST['already_acc'])){
                 ?>
                     <script>
-                        window.open("http://localhost/sms-main/Admin/admin_login.php","_self")
+                        window.open("http://localhost:8080/Admin/admin_login.php","_self")
                     </script>
                 <?php
             }

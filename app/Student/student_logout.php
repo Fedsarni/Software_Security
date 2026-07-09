@@ -4,7 +4,7 @@ if(isset($_SESSION['isStudentLogin']) == 0){
     ?>
         <script type="text/javascript">
              alert("can't be logout")
-            window.open("http://localhost/sms-main/student/student_panel.php")
+            window.open("http://localhost:8080/student/student_panel.php")
         </script>
     <?php
 }else{
@@ -12,7 +12,7 @@ if(isset($_SESSION['isStudentLogin']) == 0){
     ?>
     <script type="text/javascript">
         alert('Logout successfully')
-        window.open("http://localhost/sms-main/student/student_login.php")
+        window.open("http://localhost:8080/student/student_login.php")
     </script>
 <?php
 }

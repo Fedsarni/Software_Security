@@ -273,7 +273,7 @@
                 ?>
                     <script>
                         alert("This Notice Added Already For Students !");
-                        window.open("http://localhost/sms-main/Faculty/faculty_notice.php","_self");
+                        window.open("http://localhost:8080/Faculty/faculty_notice.php","_self");
                     </script>
                 <?php
             } else {
@@ -283,14 +283,14 @@
                     ?>
                         <script>
                             alert("Notice Added Successfully For Students !");
-                            window.open("http://localhost/sms-main/Faculty/faculty_notice.php","_self");
+                            window.open("http://localhost:8080/Faculty/faculty_notice.php","_self");
                         </script>
                     <?php
                 }else{
                     ?>
                         <script>
                             alert("Something Went Wrong !");
-                            window.open("http://localhost/sms-main/Faculty/faculty_notice.php","_self");
+                            window.open("http://localhost:8080/Faculty/faculty_notice.php","_self");
                         </script>
                     <?php
                 }

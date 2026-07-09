@@ -400,14 +400,14 @@
                         ?>
                             <script>
                                 alert("Java Assignment Genrated !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }else{
                         ?>
                             <script>
                                 alert("Something Went Wrong !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }
@@ -426,14 +426,14 @@
                         ?>
                             <script>
                                 alert("Python Assignment Genrated !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }else{
                         ?>
                             <script>
                                 alert("Something Went Wrong !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }
@@ -453,14 +453,14 @@
                         ?>
                             <script>
                                 alert("Kotlin Assignment Genrated !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }else{
                         ?>
                             <script>
                                 alert("Something Went Wrong !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }
@@ -480,14 +480,14 @@
                         ?>
                             <script>
                                 alert("C & C++ Assignment Genrated !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }else{
                         ?>
                             <script>
                                 alert("Something Went Wrong !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }
@@ -507,14 +507,14 @@
                         ?>
                             <script>
                                 alert("Php Assignment Genrated !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }else{
                         ?>
                             <script>
                                 alert("Something Went Wrong !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }
@@ -533,14 +533,14 @@
                         ?>
                             <script>
                                 alert("Cyber-Security Assignment Genrated !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }else{
                         ?>
                             <script>
                                 alert("Something Went Wrong !");
-                                window.open("http://localhost/sms-main/Faculty/faculty_assignments.php","_self");
+                                window.open("http://localhost:8080/Faculty/faculty_assignments.php","_self");
                             </script>
                         <?php
                     }

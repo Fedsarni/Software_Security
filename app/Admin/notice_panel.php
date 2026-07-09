@@ -254,7 +254,7 @@
                     ?>
                         <script>
                             alert("This Notice Added Already For Faculty !");
-                            window.open("http://localhost/sms-main/Admin/notice_panel.php","_self");
+                            window.open("http://localhost:8080/Admin/notice_panel.php","_self");
                         </script>
                     <?php
                 } else {
@@ -264,14 +264,14 @@
                         ?>
                             <script>
                                 alert("Notice Added Successfully For Faculty !");
-                                window.open("http://localhost/sms-main/Admin/notice_panel.php","_self");
+                                window.open("http://localhost:8080/Admin/notice_panel.php","_self");
                             </script>
                         <?php
                     }else{
                         ?>
                             <script>
                                 alert("Something Went Wrong !");
-                                window.open("http://localhost/sms-main/Admin/notice_panel.php","_self");
+                                window.open("http://localhost:8080/Admin/notice_panel.php","_self");
                             </script>
                         <?php
                     }
@@ -294,7 +294,7 @@
                     ?>
                         <script>
                             alert("This Notice Added Already For Student !");
-                            window.open("http://localhost/sms-main/Admin/notice_panel.php","_self");
+                            window.open("http://localhost:8080/Admin/notice_panel.php","_self");
                         </script>
                     <?php
                 } else {
@@ -304,14 +304,14 @@
                         ?>
                             <script>
                                 alert("Notice Added Successfully For Student !");
-                                window.open("http://localhost/sms-main/Admin/notice_panel.php","_self");
+                                window.open("http://localhost:8080/Admin/notice_panel.php","_self");
                             </script>
                         <?php
                     }else{
                         ?>
                             <script>
                                 alert("Something Went Wrong !");
-                                window.open("http://localhost/sms-main/Admin/notice_panel.php","_self");
+                                window.open("http://localhost:8080/Admin/notice_panel.php","_self");
                             </script>
                         <?php
                     }
