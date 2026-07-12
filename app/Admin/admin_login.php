@@ -200,9 +200,18 @@
             $PASSWORD=$_POST[$ADMIN_PASSWORD];
             
 
-            $selectQuery="SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL='$EMAIL' AND $ADMIN_PASSWORD='$PASSWORD'";
-            $dbQuery=mysqli_query($con,$selectQuery);
-            $data=mysqli_num_rows($dbQuery);
+            // PRIMA (da eliminare/commentare):
+            //$selectQuery="SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL='$EMAIL' AND $ADMIN_PASSWORD='$PASSWORD'";
+            //$dbQuery=mysqli_query($con,$selectQuery);
+            //$data=mysqli_num_rows($dbQuery);
+
+            // DOPO:
+            $selectQuery = "SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL = ? AND $ADMIN_PASSWORD = ?";
+            $stmt = mysqli_prepare($con, $selectQuery);
+            mysqli_stmt_bind_param($stmt, "ss", $EMAIL, $PASSWORD);
+            mysqli_stmt_execute($stmt);
+            $dbQuery = mysqli_stmt_get_result($stmt);
+            $data = mysqli_num_rows($dbQuery);
 
             if($data){
                 $_SESSION['email'] = $EMAIL;
@@ -215,9 +224,20 @@
 
                 <?php
 
-            }else if($selectQuery="SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL='$EMAIL' "){
-                $dbQuery=mysqli_query($con,$selectQuery);
-                $data=mysqli_num_rows($dbQuery);
+                // PRIMA (ancora presente, da correggere):
+                //}else if($selectQuery="SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL='$EMAIL' "){
+                   // $dbQuery=mysqli_query($con,$selectQuery);
+                    //$data=mysqli_num_rows($dbQuery);
+
+                // DOPO:
+                }else{
+                    $selectQuery2 = "SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL = ?";
+                    $stmt2 = mysqli_prepare($con, $selectQuery2);
+                    mysqli_stmt_bind_param($stmt2, "s", $EMAIL);
+                    mysqli_stmt_execute($stmt2);
+                    $dbQuery = mysqli_stmt_get_result($stmt2);
+                    $data = mysqli_num_rows($dbQuery);
+                    
                 if($data){
                     
                         ?>

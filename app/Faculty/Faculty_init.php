@@ -1,7 +1,10 @@
 <?php
 
-$DATABASE_NAME='sms';
-$HOST='localhost';
+// DOPO:
+$DATABASE_NAME='sms_db';
+$HOST='sms-db';
+$USER='sms_user';
+$PASSWORD='sms_password';
 
 $STUDENT='student';
 $ADMIN='admin';
@@ -50,9 +53,6 @@ $CS_ASSIGNMENTS='cs_assignments';
 $CS_CH='cs_ch';
 $CS_DES='cs_des';
 
-
-$USER='root';
-$PASSWORD='';
 
 $FACULTY_EMAIL='faculty_email';
 $FACULTY_PASSWORD='faculty_password';

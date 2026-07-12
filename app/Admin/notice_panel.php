@@ -258,8 +258,15 @@
                         </script>
                     <?php
                 } else {
-                    $insertInTable = "INSERT INTO $FACULTY_NOTICE_ADD VALUES('$DATE_FC','$NAME_FC','$DES_FC')";
-                    $queryExe = mysqli_query($con,$insertInTable);
+                    // PRIMA :
+                    //$insertInTable = "INSERT INTO $FACULTY_NOTICE_ADD VALUES('$DATE_FC','$NAME_FC','$DES_FC')";
+                    // DOPO:
+                    $insertInTable = "INSERT INTO $FACULTY_NOTICE_ADD VALUES(?, ?, ?)";
+                    $stmt = mysqli_prepare($con, $insertInTable);
+                    mysqli_stmt_bind_param($stmt, "sss", $DATE_FC, $NAME_FC, $DES_FC);
+                    //mysqli_stmt_execute($stmt);
+                    //$queryExe = mysqli_query($con,$insertInTable);
+                    $queryExe = mysqli_stmt_execute($stmt);
                     if($queryExe){
                         ?>
                             <script>
@@ -298,8 +305,16 @@
                         </script>
                     <?php
                 } else {
-                    $insertInTable = "INSERT INTO $STUDENT_NOTICE_ADD VALUES('$DATE_ST','$NAME_ST','$DES_ST')";
-                    $queryExe = mysqli_query($con,$insertInTable);
+                    // PRIMA :
+                    //$insertInTable = "INSERT INTO $STUDENT_NOTICE_ADD VALUES('$DATE_ST','$NAME_ST','$DES_ST')";
+                    // DOPO:
+                    $insertInTable = "INSERT INTO $STUDENT_NOTICE_ADD VALUES(?, ?, ?)";
+                    $stmt = mysqli_prepare($con, $insertInTable);
+                    mysqli_stmt_bind_param($stmt, "sss", $DATE_ST, $NAME_ST, $DES_ST);
+                    // PRIMA (le due righe insieme, sbagliato):
+                    //mysqli_stmt_execute($stmt);
+                    //$queryExe = mysqli_query($con,$insertInTable);
+                    $queryExe = mysqli_stmt_execute($stmt);
                     if($queryExe){
                         ?>
                             <script>

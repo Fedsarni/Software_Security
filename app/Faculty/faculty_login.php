@@ -176,9 +176,17 @@
             $EMAIL=$_POST[$FACULTY_EMAIL];
             $PASSWORD=$_POST[$FACULTY_PASSWORD];
             
-            $selectQuery="SELECT * FROM $FACULTY_ADD WHERE $FACULTY_EMAIL='$EMAIL' AND $FACULTY_PASSWORD='$PASSWORD' ";
-            $dbQuery=mysqli_query($con,$selectQuery);
-            $data=mysqli_num_rows($dbQuery);
+            // PRIMA:
+            //$selectQuery="SELECT * FROM $FACULTY_ADD WHERE $FACULTY_EMAIL='$EMAIL' AND $FACULTY_PASSWORD='$PASSWORD' ";
+            //$dbQuery=mysqli_query($con,$selectQuery);
+
+            // DOPO:
+            $selectQuery = "SELECT * FROM $FACULTY_ADD WHERE $FACULTY_EMAIL = ? AND $FACULTY_PASSWORD = ?";
+            $stmt = mysqli_prepare($con, $selectQuery);
+            mysqli_stmt_bind_param($stmt, "ss", $EMAIL, $PASSWORD);
+            mysqli_stmt_execute($stmt);
+            $dbQuery = mysqli_stmt_get_result($stmt);
+            $data = mysqli_num_rows($dbQuery);
 
             if($data){
                 $_SESSION['email'] = $EMAIL;

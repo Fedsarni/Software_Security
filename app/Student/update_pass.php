@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['email'])){
+    header("Location: student_login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
     <head> <title>Update Password</title> </head>
@@ -193,8 +200,15 @@
         $CPASSWD=$_POST['studcpassword'];
 
             if($PASSWD==$CPASSWD){
-                $sql="UPDATE $STUDENT_ADD SET $STUDENT_PASSWORD='$PASSWD' WHERE $STUDENT_EMAIL='$EMAIL'";
-                $dbQuery=mysqli_query($con,$sql);
+                // PRIMA
+                //$sql="UPDATE $STUDENT_ADD SET $STUDENT_PASSWORD='$PASSWD' WHERE $STUDENT_EMAIL='$EMAIL'";
+                //$dbQuery=mysqli_query($con,$sql);
+
+                // DOPO:
+                $sql = "UPDATE $STUDENT_ADD SET $STUDENT_PASSWORD = ? WHERE $STUDENT_EMAIL = ?";
+                $stmt = mysqli_prepare($con, $sql);
+                mysqli_stmt_bind_param($stmt, "ss", $PASSWD, $EMAIL);
+                $dbQuery = mysqli_stmt_execute($stmt);
                 if(!$dbQuery){
                 ?>
                     <script type="text/javascript">
