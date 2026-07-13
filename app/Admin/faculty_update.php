@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['email']) || !isset($_SESSION['isAdminLogin'])){
+    header("Location: admin_login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
     <head> <title>Faculty Update Panel</title> </head>
@@ -146,10 +153,13 @@
                     <?php
                         error_reporting(0);
                         include 'Admin_init.php';
-                            $emailGet=$_GET[$FACULTY_EMAIL];
-                            $query= "SELECT * FROM  $FACULTY_ADD WHERE $FACULTY_EMAIL= '$emailGet' ";
-                            $data= mysqli_query($con,$query);
-                            $row= mysqli_fetch_array($data);
+                            $emailGet = $_GET[$FACULTY_EMAIL];
+                            $query = "SELECT * FROM $FACULTY_ADD WHERE $FACULTY_EMAIL = ?";
+                            $stmt0 = mysqli_prepare($con, $query);
+                            mysqli_stmt_bind_param($stmt0, "s", $emailGet);
+                            mysqli_stmt_execute($stmt0);
+                            $data = mysqli_stmt_get_result($stmt0);
+                            $row = mysqli_fetch_array($data);
                         ?>
 
                     <form method="POST">
@@ -180,7 +190,7 @@
                         </div>
             
                         <div style="margin-top: 7px;">
-                            <input value="<?php echo $row[$FACULTY_PASSWORD] ?>" type="password" name="faculty_password" id="faculty_password" 
+                                <input value="" type="password" name="faculty_password" id="faculty_password" placeholder="Lascia vuoto per non cambiare la password"
                                 style="margin-inline-start: 7px;padding: 7px; width: 250px;
                                     border-radius: 12px; outline-color: transparent;
                                     border-color: transparent; margin-bottom: 3px" 
@@ -222,15 +232,24 @@
             
             if(isset($_POST['add_faculty'])){
                 $MNO=$_POST[$FACULTY_MNO];
-                $NAME=$_POST[$FACULTY_NAME]; 
+                $NAME=$_POST[$FACULTY_NAME];
                 $EMAIL=$_POST[$FACULTY_EMAIL];
-                $PASSWORD=$_POST[$FACULTY_PASSWORD];
                 $QUALIFICATION=$_POST[$FACULTY_QUALIFICATION];
+                $PASSWORD = $_POST[$FACULTY_PASSWORD];
 
-                $sql = "UPDATE $FACULTY_ADD SET $FACULTY_MNO=$MNO , $FACULTY_NAME='$NAME' , $FACULTY_PASSWORD='$PASSWORD' , $FACULTY_QUALIFICATION='$QUALIFICATION' WHERE $FACULTY_EMAIL = '$emailGet' ";
+                if(!empty($PASSWORD)){
+                    $HASHED_PASSWORD = password_hash($PASSWORD, PASSWORD_BCRYPT);
+                    $sql = "UPDATE $FACULTY_ADD SET $FACULTY_MNO = ?, $FACULTY_NAME = ?, $FACULTY_PASSWORD = ?, $FACULTY_QUALIFICATION = ? WHERE $FACULTY_EMAIL = ?";
+                    $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "issss", $MNO, $NAME, $HASHED_PASSWORD, $QUALIFICATION, $emailGet);
+                }else{
+                    $sql = "UPDATE $FACULTY_ADD SET $FACULTY_MNO = ?, $FACULTY_NAME = ?, $FACULTY_QUALIFICATION = ? WHERE $FACULTY_EMAIL = ?";
+                    $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "isss", $MNO, $NAME, $QUALIFICATION, $emailGet);
+                }
+                $queryExe = mysqli_stmt_execute($stmt);
 
-                $dbquery = mysqli_query($con,$sql);
-                if(!$dbquery){
+                if(!$queryExe){
                     echo "something what are going !!";
                 } else {
                     ?>

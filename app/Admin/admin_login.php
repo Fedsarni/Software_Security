@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en-US" style="text-align: center;">
     <meta charset="UTF-8">
@@ -63,7 +64,7 @@
 
             .centered {
                 position: absolute;
-                top: 50%;   
+                top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 text-align: center;
@@ -105,10 +106,10 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="email" name="admin_email" id="admin_email" 
+                                            <input type="email" name="admin_email" id="admin_email"
                                                 style="margin-inline-start: 7px ; padding: 7px ; 
                                                         width: 250px ; border-radius:12px ; 
-                                                        outline-color: transparent ; border-color: transparent" 
+                                                        outline-color: transparent ; border-color: transparent"
                                                         placeholder="you@example.com" required >
                                         </div>
                                     </td>
@@ -121,17 +122,17 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="password" name="admin_password" id="admin_password" 
+                                            <input type="password" name="admin_password" id="admin_password"
                                                 style="margin-inline-start: 7px ; padding: 7px ; margin-top: 5px;
                                                         width: 250px ; border-radius:12px ; 
-                                                        outline-color: transparent ; border-color: transparent ; "  
+                                                        outline-color: transparent ; border-color: transparent ; "
                                                         placeholder="Atleast 8 Chars Please !" required>
                                         </div>
                                     </td>
                                 </table>
 
                                 <div style="margin-bottom: 15px">
-                                    <input class="btn signin" type="submit" name="btnLogin" id="btnLogin" value="SignIn" 
+                                    <input class="btn signin" type="submit" name="btnLogin" id="btnLogin" value="SignIn"
                                     style="
                                     padding-left: 32px;
                                     padding-right: 32px;
@@ -144,7 +145,7 @@
                                     margin-top: 22px">
                                 </div>
                         </form>
-                            </tr> 
+                            </tr>
                         </td>
                      </form>
                     </table>
@@ -154,7 +155,7 @@
                     <tr>
                         <form action="#" method="post">
                             <div style="margin-bottom: 17px">
-                                <button class="btn already" name="newAccount" id="newAccount" 
+                                <button class="btn already" name="newAccount" id="newAccount"
                                     style="
                                     padding-left: 48px;
                                     padding-right: 48px;
@@ -171,7 +172,7 @@
 
                         <form action="#" method="post">
                             <div style="margin-bottom: 15px">
-                                <button class="btn signin" name="go_to_home" id="go_to_home" 
+                                <button class="btn signin" name="go_to_home" id="go_to_home"
                                 style="
                                 padding-left: 32px;
                                 padding-right: 32px;
@@ -192,67 +193,35 @@
     </body>
 
         <?php
-        session_start();
+        
         include "Admin_init.php" ;
 
         if(isset($_POST['btnLogin'])){
             $EMAIL=$_POST[$ADMIN_EMAIL];
             $PASSWORD=$_POST[$ADMIN_PASSWORD];
-            
 
-            // PRIMA (da eliminare/commentare):
-            //$selectQuery="SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL='$EMAIL' AND $ADMIN_PASSWORD='$PASSWORD'";
-            //$dbQuery=mysqli_query($con,$selectQuery);
-            //$data=mysqli_num_rows($dbQuery);
-
-            // DOPO:
-            $selectQuery = "SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL = ? AND $ADMIN_PASSWORD = ?";
+            $selectQuery = "SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL = ?";
             $stmt = mysqli_prepare($con, $selectQuery);
-            mysqli_stmt_bind_param($stmt, "ss", $EMAIL, $PASSWORD);
+            mysqli_stmt_bind_param($stmt, "s", $EMAIL);
             mysqli_stmt_execute($stmt);
             $dbQuery = mysqli_stmt_get_result($stmt);
-            $data = mysqli_num_rows($dbQuery);
+            $row = mysqli_fetch_assoc($dbQuery);
 
-            if($data){
+            if($row && password_verify($PASSWORD, $row[$ADMIN_PASSWORD])){
                 $_SESSION['email'] = $EMAIL;
                 $_SESSION['isAdminLogin'] = 0;
                 ?>
-                    <script type="text/javascript">    
+                    <script type="text/javascript">
                         alert('Successfully Login');
                         window.open("http://localhost:8080/Admin/admin_panel.php","_self");
                     </script>
-
                 <?php
-
-                // PRIMA (ancora presente, da correggere):
-                //}else if($selectQuery="SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL='$EMAIL' "){
-                   // $dbQuery=mysqli_query($con,$selectQuery);
-                    //$data=mysqli_num_rows($dbQuery);
-
-                // DOPO:
-                }else{
-                    $selectQuery2 = "SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL = ?";
-                    $stmt2 = mysqli_prepare($con, $selectQuery2);
-                    mysqli_stmt_bind_param($stmt2, "s", $EMAIL);
-                    mysqli_stmt_execute($stmt2);
-                    $dbQuery = mysqli_stmt_get_result($stmt2);
-                    $data = mysqli_num_rows($dbQuery);
-                    
-                if($data){
-                    
-                        ?>
-                            <script type="text/javascript">
-                                alert('Wrong Password')
-                            </script>
-        
-                        <?php
-                }else{
+            }else{
                 ?>
                     <script type="text/javascript">
-                        alert('Admin not found Pls SignUp !')
+                        alert('Invalid email or password')
                     </script>
                 <?php
-            }
             }
         }
 

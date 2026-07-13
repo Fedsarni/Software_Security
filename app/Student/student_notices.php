@@ -155,7 +155,7 @@
 
                         if($dbquery){
                             while($rows = mysqli_fetch_array($queryExe)){
-                                ?>   
+                                ?>
                                     <fieldset style="border-radius:15px ; border-color:white ; border-width:4px ; background-color: #f4898b ; margin-bottom: 10px ;">
                                         <table style="text-align:left"> 
                                             <tr>
@@ -171,7 +171,9 @@
                                                 <td>
                                                         
                                                     <?php                                                        
-                                                        echo "Notice : $rows[$STUDENT_NOTICE_NAME]"."</br>";                                                         
+                               
+                                        echo "Notice : " . htmlspecialchars($rows[$STUDENT_NOTICE_NAME]) . "</br>";
+                                
                                                     ?>
                                                     
                                                 </td>
@@ -180,7 +182,7 @@
                                                 <td>
                                                         
                                                     <?php                                                    
-                                                        echo "Des : $rows[$STUDENT_NOTICE_DES]"."</br>";
+                                                        echo "Des : " . htmlspecialchars($rows[$STUDENT_NOTICE_DES]) . "</br>";
                                                     ?>
                                                     
                                                 </td>
@@ -232,7 +234,7 @@
                                                     <td>
                                                         
                                                         <?php                                                        
-                                                            echo "Notice : $rows[$FC_STUDENT_NOTICE_NAME]"."</br>";                                                         
+                                                            echo "Notice : " . htmlspecialchars($rows[$FC_STUDENT_NOTICE_NAME]) . "</br>";
                                                         ?>
                                                     
                                                     </td>
@@ -241,7 +243,7 @@
                                                     <td>
                                                         
                                                         <?php                                                    
-                                                            echo "Des : $rows[$FC_STUDENT_NOTICE_DES]"."</br>";
+                                                            echo "Des : " . htmlspecialchars($rows[$FC_STUDENT_NOTICE_DES]) . "</br>";
                                                         ?>
                                                     
                                                     </td>

@@ -227,9 +227,12 @@
                 $EMAIL=$_POST[$ADMIN_EMAIL];
                 $PASSWORD=$_POST[$ADMIN_PASSWORD];
 
-                $sql="SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL='$EMAIL' ";
-                    $dbquery=mysqli_query($con,$sql);
-                    $data=mysqli_num_rows($dbquery);
+                $sql = "SELECT * FROM $ADMIN WHERE $ADMIN_EMAIL = ?";
+                    $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "s", $EMAIL);
+                    mysqli_stmt_execute($stmt);
+                    $dbquery = mysqli_stmt_get_result($stmt);
+                    $data = mysqli_num_rows($dbquery);
                     if($data){
                         ?>
                         <script type="text/javascript">
@@ -238,8 +241,11 @@
                         </script>
                     <?php
                     }else{
-                        $insertInTable= "INSERT INTO $ADMIN VALUES('$NAME','$CONTACT','$EMAIL','$PASSWORD')";
-                        $queryExe=mysqli_query($con,$insertInTable);
+                        $HASHED_PASSWORD = password_hash($PASSWORD, PASSWORD_BCRYPT);
+                        $insertInTable = "INSERT INTO $ADMIN VALUES(?, ?, ?, ?)";
+                        $stmt2 = mysqli_prepare($con, $insertInTable);
+                        mysqli_stmt_bind_param($stmt2, "ssss", $NAME, $CONTACT, $EMAIL, $HASHED_PASSWORD);
+                        $queryExe = mysqli_stmt_execute($stmt2);
                         if($queryExe){
                         ?>
                             <script type="text/javascript">

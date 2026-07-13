@@ -205,9 +205,15 @@ if(!isset($_SESSION['email'])){
                 //$dbQuery=mysqli_query($con,$sql);
 
                 // DOPO:
+                //$sql = "UPDATE $STUDENT_ADD SET $STUDENT_PASSWORD = ? WHERE $STUDENT_EMAIL = ?";
+                //$stmt = mysqli_prepare($con, $sql);
+                //mysqli_stmt_bind_param($stmt, "ss", $PASSWD, $EMAIL);
+                //$dbQuery = mysqli_stmt_execute($stmt);
+                
+                $HASHED_PASSWD = password_hash($PASSWD, PASSWORD_BCRYPT);
                 $sql = "UPDATE $STUDENT_ADD SET $STUDENT_PASSWORD = ? WHERE $STUDENT_EMAIL = ?";
                 $stmt = mysqli_prepare($con, $sql);
-                mysqli_stmt_bind_param($stmt, "ss", $PASSWD, $EMAIL);
+                mysqli_stmt_bind_param($stmt, "ss", $HASHED_PASSWD, $EMAIL);
                 $dbQuery = mysqli_stmt_execute($stmt);
                 if(!$dbQuery){
                 ?>

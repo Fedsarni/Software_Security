@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['email']) || !isset($_SESSION['isAdminLogin'])){
+    header("Location: admin_login.php");
+    exit();
+}
+?>
 <html>
 
 <head>

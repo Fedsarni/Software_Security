@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['email']) || !isset($_SESSION['isAdminLogin'])){
+    header("Location: admin_login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
     <head> <title>Student Panel</title> </head>
@@ -234,8 +241,13 @@
                         </script>
                     <?php
                 } else {
-                    $insertInTable = "INSERT INTO $STUDENT_ADD VALUES($MNO,'$NAME','$EMAIL','$PASSWORD',$RESULT)";
-                    $queryExe = mysqli_query($con,$insertInTable);
+                    //$insertInTable = "INSERT INTO $STUDENT_ADD VALUES($MNO,'$NAME','$EMAIL','$PASSWORD',$RESULT)";
+                    $HASHED_PASSWORD = password_hash($PASSWORD, PASSWORD_BCRYPT);
+                    $insertInTable = "INSERT INTO $STUDENT_ADD VALUES(?, ?, ?, ?, ?)";
+                    $stmt = mysqli_prepare($con, $insertInTable);
+                    mysqli_stmt_bind_param($stmt, "isssd", $MNO, $NAME, $EMAIL, $HASHED_PASSWORD, $RESULT);
+                    $queryExe = mysqli_stmt_execute($stmt);
+                    //$queryExe = mysqli_query($con,$insertInTable);
                     if($queryExe){
                         ?>
                             <script>

@@ -64,7 +64,7 @@
 
             .centered {
                 position: absolute;
-                top: 50%;   
+                top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 text-align: center;
@@ -106,10 +106,10 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="email" name="faculty_email" id="faculty_email" 
+                                            <input type="email" name="faculty_email" id="faculty_email"
                                                 style="margin-inline-start: 7px ; padding: 7px ; 
                                                         width: 250px ; border-radius:12px ; 
-                                                        outline-color: transparent ; border-color: transparent" 
+                                                        outline-color: transparent ; border-color: transparent"
                                                         placeholder="you@example.com" required >
                                         </div>
                                     </td>
@@ -122,17 +122,17 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="password" name="faculty_password" id="faculty_password" 
+                                            <input type="password" name="faculty_password" id="faculty_password"
                                                 style="margin-inline-start: 7px ; padding: 7px ; margin-top: 5px;
                                                         width: 250px ; border-radius:12px ; 
-                                                        outline-color: transparent ; border-color: transparent ; "  
+                                                        outline-color: transparent ; border-color: transparent ; "
                                                         placeholder="Atleast 8 Chars Please !" required>
                                         </div>
                                     </td>
                                 </table>
 
                                 <div style="margin-bottom: 15px">
-                                    <input class="btn signin" type="submit" name="btnLogin" id="btnLogin" value="SignIn" 
+                                    <input class="btn signin" type="submit" name="btnLogin" id="btnLogin" value="SignIn"
                                     style="
                                     padding-left: 32px;
                                     padding-right: 32px;
@@ -144,12 +144,12 @@
                                     border-radius: 12px ; 
                                     margin-top: 22px">
                                 </div>
-                            </tr> 
+                            </tr>
                         </td>
                      </form>
                             <form action="#" method="post">
                                     <div style="margin-bottom: 15px">
-                                        <button class="btn signin" name="go_to_home" id="go_to_home" 
+                                        <button class="btn signin" name="go_to_home" id="go_to_home"
                                         style="
                                         padding-left: 32px;
                                         padding-right: 32px;
@@ -175,20 +175,38 @@
 
             $EMAIL=$_POST[$FACULTY_EMAIL];
             $PASSWORD=$_POST[$FACULTY_PASSWORD];
-            
-            // PRIMA:
-            //$selectQuery="SELECT * FROM $FACULTY_ADD WHERE $FACULTY_EMAIL='$EMAIL' AND $FACULTY_PASSWORD='$PASSWORD' ";
-            //$dbQuery=mysqli_query($con,$selectQuery);
 
-            // DOPO:
-            $selectQuery = "SELECT * FROM $FACULTY_ADD WHERE $FACULTY_EMAIL = ? AND $FACULTY_PASSWORD = ?";
+            // ============================================
+            // FASE B — FIX SQL INJECTION (superato dalla Fase D)
+            // Query parametrizzata, ma la password veniva ancora
+            // confrontata in chiaro dentro la query SQL.
+            // ============================================
+            // $selectQuery = "SELECT * FROM $FACULTY_ADD WHERE $FACULTY_EMAIL = ? AND $FACULTY_PASSWORD = ?";
+            // $stmt = mysqli_prepare($con, $selectQuery);
+            // mysqli_stmt_bind_param($stmt, "ss", $EMAIL, $PASSWORD);
+            // mysqli_stmt_execute($stmt);
+            // $dbQuery = mysqli_stmt_get_result($stmt);
+            // $data = mysqli_num_rows($dbQuery);
+            //
+            // if($data){
+            //     $_SESSION['email'] = $EMAIL;
+            //     ...
+
+            // ============================================
+            // FASE D — PASSWORD HASHING
+            // La query cerca solo per email; la password viene
+            // verificata in PHP con password_verify() contro
+            // l'hash bcrypt salvato nel database, mai confrontata
+            // in chiaro né dentro la query SQL.
+            // ============================================
+            $selectQuery = "SELECT * FROM $FACULTY_ADD WHERE $FACULTY_EMAIL = ?";
             $stmt = mysqli_prepare($con, $selectQuery);
-            mysqli_stmt_bind_param($stmt, "ss", $EMAIL, $PASSWORD);
+            mysqli_stmt_bind_param($stmt, "s", $EMAIL);
             mysqli_stmt_execute($stmt);
             $dbQuery = mysqli_stmt_get_result($stmt);
-            $data = mysqli_num_rows($dbQuery);
+            $row = mysqli_fetch_assoc($dbQuery);
 
-            if($data){
+            if($row && password_verify($PASSWORD, $row[$FACULTY_PASSWORD])){
                 $_SESSION['email'] = $EMAIL;
                 $_SESSION['isFacultyLogin'] = 0;
                 ?>
@@ -200,7 +218,7 @@
             }else{
                 ?>
                     <script type="text/javascript">
-                        alert("Something went wrong ! try Again ...")
+                        alert("Invalid email or password")
                     </script>
                 <?php
             }

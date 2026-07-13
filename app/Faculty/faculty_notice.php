@@ -1,10 +1,13 @@
 <?php
-    include "Faculty_init.php";
-    $select_notice = "SELECT * FROM $FACULTY_NOTICE_ADD";
-    $queryExe = mysqli_query($con,$select_notice);
-    $dbquery = mysqli_num_rows($queryExe);
+session_start();
+if(!isset($_SESSION['email'])){
+    header("Location: faculty_login.php");
+    exit();
+}
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 ?>
-
 <!DOCTYPE html>
 <html>
     <head> <title>Faculty Panel</title> </head>
@@ -171,8 +174,8 @@
                                                 <tr> 
                                                     <td>
                                                         
-                                                        <?php                                                        
-                                                            echo "Notice : $rows[$FACULTY_NOTICE_NAME]";                                                         
+                                                        <?php
+                                                            echo "Notice : " . htmlspecialchars($rows[$FACULTY_NOTICE_NAME]);
                                                         ?>
                                                     
                                                     </td>
@@ -181,7 +184,7 @@
                                                     <td>
                                                         
                                                         <?php                                                    
-                                                            echo "Des : $rows[$FACULTY_NOTICE_DES]";
+                                                            echo "Des : " . htmlspecialchars($rows[$FACULTY_NOTICE_DES]);
                                                         ?>
                                                     
                                                     </td>

@@ -1,3 +1,15 @@
+<?php
+session_start();
+if(!isset($_SESSION['email']) || !isset($_SESSION['isAdminLogin'])){
+    header("Location: admin_login.php");
+    exit();
+}
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
     <head> <title>Notice Panel</title> </head>
@@ -46,7 +58,7 @@
 
         .centered {
             position: absolute;
-            top: 50%;   
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
@@ -58,7 +70,7 @@
             background: linear-gradient(to right ,  #EEA47F , white , #00539C);
         }
 
-        .navbar {  
+        .navbar {
             width: 982px;
             margin: auto;
             background-color: #E9967A;
@@ -98,17 +110,17 @@
             </a>
 
             <a style="margin-left: 57.5px" href="admin_panel.php">
-                <i class="fa fa-fw fa-home"></i> 
-                Admin Panel 
+                <i class="fa fa-fw fa-home"></i>
+                Admin Panel
             </a>
 
             <a class="active" href="notice_panel.php">
-                <i class="fa fa-fw fa-bell"></i> 
+                <i class="fa fa-fw fa-bell"></i>
                 Notice
-            </a> 
+            </a>
 
             <a href="faculty_panel.php">
-                <i class="fa fa-fw fa-graduation-cap"></i> 
+                <i class="fa fa-fw fa-graduation-cap"></i>
                 Faculty
             </a>
 
@@ -118,8 +130,8 @@
             </a>
 
             <a href="student_panel.php">
-                <i class="fa fa-fw fa-user"></i> 
-                Student  
+                <i class="fa fa-fw fa-user"></i>
+                Student
             </a>
 
         </div>
@@ -137,32 +149,34 @@
 
                     <form action="#" method="post">
 
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
                         <div style="margin-top: 7px;">
-                            <input type="date" name="faculty_notice_date" id="faculty_notice_date" 
+                            <input type="date" name="faculty_notice_date" id="faculty_notice_date"
                                 style="margin-inline-start: 7px;padding: 7px; width: 250px;
                                         border-radius: 12px; outline-color: transparent;
-                                        border-color: transparent; margin-bottom: 3px" 
+                                        border-color: transparent; margin-bottom: 3px"
                                 placeholder="Enter Date Of Notice" required>
                         </div>
 
                         <div style="margin-top: 7px;">
-                            <input type="text" name="faculty_notice_name" id="faculty_notice_name" 
+                            <input type="text" name="faculty_notice_name" id="faculty_notice_name"
                                 style="margin-inline-start: 7px;padding: 7px; width: 250px;
                                         border-radius: 12px; outline-color: transparent;
-                                        border-color: transparent; margin-bottom: 3px" 
+                                        border-color: transparent; margin-bottom: 3px"
                                 placeholder="Enter Topic Of Notice" required>
                         </div>
 
                         <div style="margin-top: 7px;">
-                            <input type="text" name="faculty_notice_des" id="faculty_notice_des" 
+                            <input type="text" name="faculty_notice_des" id="faculty_notice_des"
                                 style="margin-inline-start: 7px;padding: 7px; width: 250px;
                                         border-radius: 12px; outline-color: transparent;
-                                        border-color: transparent; margin-bottom: 3px " 
+                                        border-color: transparent; margin-bottom: 3px "
                                 placeholder="Enter Description Of Notice">
                         </div>
 
                         <div>
-                            <input class="btn add_fac" type="submit" name="add_notice_faculty" id="add_notice_faculty" value="Faculty Notice" 
+                            <input class="btn add_fac" type="submit" name="add_notice_faculty" id="add_notice_faculty" value="Faculty Notice"
                             style="
                                     padding-left: 28px;
                                     padding-right: 28px;
@@ -173,7 +187,7 @@
                                     font-weight: bold ;   
                                     border-radius: 12px ; 
                                     margin-top: 22px ; margin-bottom: 22px">
-                        </div>  
+                        </div>
 
                     </form>
                 </fieldset>
@@ -192,32 +206,34 @@
 
                         <form action="#" method="post">
 
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
                             <div style="margin-top: 7px;">
-                                <input type="date" name="student_notice_date" id="student_notice_date" 
+                                <input type="date" name="student_notice_date" id="student_notice_date"
                                     style="margin-inline-start: 7px;padding: 7px; width: 250px;
                                             border-radius: 12px; outline-color: transparent;
-                                            border-color: transparent; margin-bottom: 3px" 
+                                            border-color: transparent; margin-bottom: 3px"
                                     placeholder="Enter Date Of Notice" required>
                             </div>
 
                             <div style="margin-top: 7px;">
-                                <input type="text" name="student_notice_name" id="student_notice_name" 
+                                <input type="text" name="student_notice_name" id="student_notice_name"
                                     style="margin-inline-start: 7px;padding: 7px; width: 250px;
                                             border-radius: 12px; outline-color: transparent;
-                                            border-color: transparent; margin-bottom: 3px" 
+                                            border-color: transparent; margin-bottom: 3px"
                                     placeholder="Enter Topic Of Notice" required>
                             </div>
 
                             <div style="margin-top: 7px;">
-                                <input type="text" name="student_notice_des" id="student_notice_des" 
+                                <input type="text" name="student_notice_des" id="student_notice_des"
                                     style="margin-inline-start: 7px;padding: 7px; width: 250px;
                                             border-radius: 12px; outline-color: transparent;
-                                            border-color: transparent; margin-bottom: 3px " 
+                                            border-color: transparent; margin-bottom: 3px "
                                     placeholder="Enter Description Of Notice">
                             </div>
 
                             <div>
-                                <input class="btn add_fac" type="submit" name="add_notice_student" id="add_notice_student" value="Student Notice" 
+                                <input class="btn add_fac" type="submit" name="add_notice_student" id="add_notice_student" value="Student Notice"
                                 style="
                                         padding-left: 28px;
                                         padding-right: 28px;
@@ -228,7 +244,7 @@
                                         font-weight: bold ;   
                                         border-radius: 12px ; 
                                         margin-top: 22px ; margin-bottom: 22px">
-                            </div>  
+                            </div>
 
                         </form>
                     </fieldset>
@@ -242,6 +258,11 @@
             $queryExe = mysqli_query($con,$createTable_fc);
 
             if(isset($_POST['add_notice_faculty'])){
+
+                if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+                    die("Richiesta non valida (token CSRF mancante o non corretto).");
+                }
+
                 $DATE_FC = $_POST[$FACULTY_NOTICE_DATE];
                 $NAME_FC = $_POST[$FACULTY_NOTICE_NAME];
                 $DES_FC = $_POST[$FACULTY_NOTICE_DES];
@@ -258,14 +279,9 @@
                         </script>
                     <?php
                 } else {
-                    // PRIMA :
-                    //$insertInTable = "INSERT INTO $FACULTY_NOTICE_ADD VALUES('$DATE_FC','$NAME_FC','$DES_FC')";
-                    // DOPO:
                     $insertInTable = "INSERT INTO $FACULTY_NOTICE_ADD VALUES(?, ?, ?)";
                     $stmt = mysqli_prepare($con, $insertInTable);
                     mysqli_stmt_bind_param($stmt, "sss", $DATE_FC, $NAME_FC, $DES_FC);
-                    //mysqli_stmt_execute($stmt);
-                    //$queryExe = mysqli_query($con,$insertInTable);
                     $queryExe = mysqli_stmt_execute($stmt);
                     if($queryExe){
                         ?>
@@ -289,6 +305,11 @@
             $queryExe = mysqli_query($con,$createTable_st);
 
             if(isset($_POST['add_notice_student'])){
+
+                if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+                    die("Richiesta non valida (token CSRF mancante o non corretto).");
+                }
+
                 $DATE_ST = $_POST[$STUDENT_NOTICE_DATE];
                 $NAME_ST = $_POST[$STUDENT_NOTICE_NAME];
                 $DES_ST = $_POST[$STUDENT_NOTICE_DES];
@@ -305,15 +326,9 @@
                         </script>
                     <?php
                 } else {
-                    // PRIMA :
-                    //$insertInTable = "INSERT INTO $STUDENT_NOTICE_ADD VALUES('$DATE_ST','$NAME_ST','$DES_ST')";
-                    // DOPO:
                     $insertInTable = "INSERT INTO $STUDENT_NOTICE_ADD VALUES(?, ?, ?)";
                     $stmt = mysqli_prepare($con, $insertInTable);
                     mysqli_stmt_bind_param($stmt, "sss", $DATE_ST, $NAME_ST, $DES_ST);
-                    // PRIMA (le due righe insieme, sbagliato):
-                    //mysqli_stmt_execute($stmt);
-                    //$queryExe = mysqli_query($con,$insertInTable);
                     $queryExe = mysqli_stmt_execute($stmt);
                     if($queryExe){
                         ?>
@@ -335,4 +350,4 @@
         ?>
 
     </body>
-</html> 
+</html>

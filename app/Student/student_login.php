@@ -64,7 +64,7 @@
 
             .centered {
                 position: absolute;
-                top: 50%;   
+                top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 text-align: center;
@@ -105,10 +105,10 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="email" name="student_email" id="faculty_email" 
+                                            <input type="email" name="student_email" id="faculty_email"
                                                 style="margin-inline-start: 7px ; padding: 7px ; 
                                                         width: 250px ; border-radius:12px ; 
-                                                        outline-color: transparent ; border-color: transparent" 
+                                                        outline-color: transparent ; border-color: transparent"
                                                         placeholder="you@example.com" required >
                                         </div>
                                     </td>
@@ -121,17 +121,17 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <input type="password" name="student_password" id="faculty_password" 
+                                            <input type="password" name="student_password" id="faculty_password"
                                                 style="margin-inline-start: 7px ; padding: 7px ; margin-top: 5px;
                                                         width: 250px ; border-radius:12px ; 
-                                                        outline-color: transparent ; border-color: transparent ; "  
+                                                        outline-color: transparent ; border-color: transparent ; "
                                                         placeholder="Atleast 8 Chars Please !" required>
                                         </div>
                                     </td>
                                 </table>
 
                                 <div style="margin-bottom: 15px">
-                                    <input class="btn signin" type="submit" name="btnLogin" id="btnLogin" value="SignIn" 
+                                    <input class="btn signin" type="submit" name="btnLogin" id="btnLogin" value="SignIn"
                                     style="
                                     padding-left: 32px;
                                     padding-right: 32px;
@@ -143,14 +143,14 @@
                                     border-radius: 12px ; 
                                     margin-top: 22px">
                                 </div>
-                            </tr> 
+                            </tr>
                         </td>
                      </form>
                     </table>
                 </fieldset>
                     <form action="update_pass.php" method="post">
                         <div style="margin-bottom: 15px">
-                            <input class="btn signin" type="submit" name="btnFrgtPass" id="btnFrgtPass" value="Forgot Password ?" 
+                            <input class="btn signin" type="submit" name="btnFrgtPass" id="btnFrgtPass" value="Forgot Password ?"
                             style="
                             padding-left: 32px;
                             padding-right: 32px;
@@ -165,7 +165,7 @@
                     </form>
                             <form action="#" method="post">
                                     <div style="margin-bottom: 15px">
-                                        <button class="btn signin" name="go_to_home" id="go_to_home" 
+                                        <button class="btn signin" name="go_to_home" id="go_to_home"
                                         style="
                                         padding-left: 32px;
                                         padding-right: 32px;
@@ -189,7 +189,7 @@
 
             $EMAIL=$_POST[$STUDENT_EMAIL];
             $PASSWORD=$_POST[$STUDENT_PASSWORD];
-            
+
             // ============================================
             // CODICE ORIGINALE — VULNERABILE A SQL INJECTION
             // Il valore di $EMAIL e $PASSWORD veniva concatenato
@@ -202,25 +202,44 @@
             // $data=mysqli_num_rows($dbQuery);
 
             // ============================================
-            // FIX — QUERY PARAMETRIZZATA (PREPARED STATEMENT)
-            // I valori $EMAIL e $PASSWORD vengono passati come
-            // parametri separati dal database (bind_param),
-            // quindi sono sempre trattati come dato letterale
-            // e mai come codice SQL eseguibile.
+            // FASE B — FIX SQL INJECTION (superato dalla Fase D)
+            // Query parametrizzata, ma la password veniva ancora
+            // confrontata in chiaro dentro la query SQL.
             // ============================================
-            $selectQuery = "SELECT * FROM $STUDENT_ADD WHERE $STUDENT_EMAIL = ? AND $STUDENT_PASSWORD = ?";
+            // $selectQuery = "SELECT * FROM $STUDENT_ADD WHERE $STUDENT_EMAIL = ? AND $STUDENT_PASSWORD = ?";
+            // $stmt = mysqli_prepare($con, $selectQuery);
+            // if (!$stmt) {
+            //     die("Errore nella preparazione della query: " . mysqli_error($con) . " | Query: " . $selectQuery);
+            // }
+            // mysqli_stmt_bind_param($stmt, "ss", $EMAIL, $PASSWORD);
+            // mysqli_stmt_execute($stmt);
+            // $dbQuery = mysqli_stmt_get_result($stmt);
+            // $data = mysqli_num_rows($dbQuery);
+            //
+            // if($data){
+            //     $_SESSION['email'] = $EMAIL;
+            //     ...
+
+            // ============================================
+            // FASE D — PASSWORD HASHING
+            // La query cerca solo per email; la password viene
+            // verificata in PHP con password_verify() contro
+            // l'hash bcrypt salvato nel database, mai confrontata
+            // in chiaro né dentro la query SQL.
+            // ============================================
+            $selectQuery = "SELECT * FROM $STUDENT_ADD WHERE $STUDENT_EMAIL = ?";
             $stmt = mysqli_prepare($con, $selectQuery);
 
             if (!$stmt) {
                 die("Errore nella preparazione della query: " . mysqli_error($con) . " | Query: " . $selectQuery);
             }
 
-            mysqli_stmt_bind_param($stmt, "ss", $EMAIL, $PASSWORD);
+            mysqli_stmt_bind_param($stmt, "s", $EMAIL);
             mysqli_stmt_execute($stmt);
             $dbQuery = mysqli_stmt_get_result($stmt);
-            $data = mysqli_num_rows($dbQuery);
+            $row = mysqli_fetch_assoc($dbQuery);
 
-            if($data){
+            if($row && password_verify($PASSWORD, $row[$STUDENT_PASSWORD])){
                 $_SESSION['email'] = $EMAIL;
                 $_SESSION['isStudentLogin'] = 0;
                 ?>
@@ -232,7 +251,7 @@
             }else{
                 ?>
                     <script type="text/javascript">
-                        alert("Something went wrong ! try Again ...")
+                        alert("Invalid email or password")
                     </script>
                 <?php
             }
