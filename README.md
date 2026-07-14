@@ -55,6 +55,6 @@ Dockerfile, docker-compose.yml, .htaccess → infrastruttura e header di sicurez
 ```
 
 ## Autori
-Federica Sarnataro
+Federica Sarnataro\
 Alessia Parisi
-Progetto sviluppato per l'A.A. 2025/2026.
+
