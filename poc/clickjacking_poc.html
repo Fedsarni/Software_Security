@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sito "innocuo" - Vinci un premio!</title>
+<style>
+    body { font-family: sans-serif; text-align: center; }
+    .fake-banner {
+        background: linear-gradient(to right, gold, orange);
+        padding: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .frame-container {
+        position: relative;
+        width: 900px;
+        height: 700px;
+        margin: 20px auto;
+        border: 4px dashed red;
+    }
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    .label {
+        position: absolute;
+        top: -30px;
+        left: 0;
+        color: red;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+    <div class="fake-banner">Congratulazioni, hai vinto un premio! (pagina finta, a scopo dimostrativo)</div>
+    <div class="frame-container">
+        <div class="label">↓ Questa è la pagina di login reale dell'SMS, incorporata qui dentro ↓</div>
+        <iframe src="http://localhost:8080/Admin/admin_login.php"></iframe>
+    </div>
+    <p>Se vedi il form di login sopra, dentro questa pagina esterna, significa che il sito<br>
+    non impedisce di essere incorporato in un iframe altrui (assenza di X-Frame-Options).<br>
+    Un vero attacco di clickjacking coprirebbe questo iframe con elementi invisibili<br>
+    per indurre la vittima a cliccare senza rendersene conto.</p>
+</body>
+</html>
