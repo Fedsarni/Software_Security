@@ -6,7 +6,7 @@ Progetto del corso **Software Security** (M.Sc. Ingegneria Informatica, Universi
 
 L'applicazione (Student Management System, PHP + MySQL, tre pannelli Admin/Faculty/Student) **non è stata sviluppata da noi**: è un progetto open source già esistente, preso da [rajatt04/Student-Management-System](https://github.com/rajatt04/Student-Management-System). Il nostro lavoro non ha riguardato le funzionalità dell'app, ma **esclusivamente la sua sicurezza**: analizzarla, trovarne le vulnerabilità e correggerle, applicando le tecniche di secure software development studiate a lezione (threat modeling, analisi statica e dinamica, remediation delle vulnerabilità). Il codice applicativo presente in questo repository è quindi in parte di terzi (le funzionalità originali) e in parte nostro (tutte le correzioni di sicurezza descritte sotto e nella relazione).
 
-📄 **Relazione completa**: [`Relazione_Finale_Progetto.docx`](./Relazione_Finale_Progetto.docx) — metodologia, codice prima/dopo, evidenze ed esiti dettagliati di ogni fase.
+📄 **Relazione completa**: [`Progetto_Software_Security.pdf`](./Progetto_Software_Security.pdf) — metodologia, codice prima/dopo, evidenze ed esiti dettagliati di ogni fase.
 
 ## Risultati principali
 
